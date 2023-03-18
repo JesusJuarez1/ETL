@@ -28,9 +28,10 @@ Estructura del proyecto
 
 
 
-Prerequisitos
-Para ejecutar este componente es necesario contar con la ejecución de Dgraph, parea ello utilizamos el siguiente comando:
+#### Prerequisitos
 
+Para ejecutar este componente es necesario contar con la ejecución de Dgraph, parea ello utilizamos el siguiente comando:
+<hr>
 docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
 
 
@@ -41,7 +42,7 @@ Adicionalmente existe un componente que permite la interacción visual con Dgrap
 docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
 
 
-Para acceder a este componente e interactuar con Dgraph nos podemos dirigir a http://localhost:8000 desde cualquier navegador
+#### Para acceder a este componente e interactuar con Dgraph nos podemos dirigir a http://localhost:8000 desde cualquier navegador
 
 Instalación
 Descarga el código del repositorio utilizando el siguiente comando:
@@ -54,7 +55,7 @@ docker build -t gestor-de-datos .
 
 
 
-Ejecución
+#### Ejecución
 Para ejecutar el componente y correr el proceso de extracción, transformación y carga de datos, utiliza el comando:
 
 docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
