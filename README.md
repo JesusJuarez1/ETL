@@ -38,9 +38,9 @@ docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph
 <hr>
 El comando anterior instanciará los componentes Dgraph Zero (componente encargado de gestionar nodos Dgraph dentro de un cluster balanceando los datos almacenados en los nodos) y Dgraph Alpha (componente encargado de almacenar y gestionar los datos así como los indices y los predicados de consulta).
 Adicionalmente existe un componente que permite la interacción visual con Dgraph llamado Dgraph Ratel, para ello podemos utilizar el siguiente comando:
-
+<hr>
 docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
-
+<hr>
 
 #### Para acceder a este componente e interactuar con Dgraph nos podemos dirigir a http://localhost:8000 desde cualquier navegador
 
@@ -50,9 +50,9 @@ git clone https://gitlab.com/tareas-arquitectura-de-software-curso/flujo-de-dato
 accede a la carpeta del componente:
 cd gestor-de-datos
 construye la imagen de Docker
-
+<hr>
 docker build -t gestor-de-datos .
-
+<hr>
 
 
 #### Ejecución
