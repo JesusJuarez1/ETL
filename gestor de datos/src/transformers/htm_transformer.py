@@ -33,6 +33,7 @@ class HTMTransformer(luigi.Task):
                         {
                             "description": entry["description_product"],
                             "quantity": entry["Qty"],
+                            "date": entry["date_invoice"],
                             "price": entry["product_price"],
                             "total": float(entry["Qty"]) * float(entry["product_price"]),
                             "invoice": entry["order_invoice"],
@@ -40,6 +41,7 @@ class HTMTransformer(luigi.Task):
                             "country": entry["country_location"]
                         }
                     )
+                    
         with self.output().open('w') as out:
             out.write(json.dumps(result, indent=4))
 

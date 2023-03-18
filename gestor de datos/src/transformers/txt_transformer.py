@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#-------------------------------------------------------------------------
+# Archivo: txt_transformer.py
+# Capitulo: Flujo de Datos
+# Autor(es): Equipo #
+# Version: 1.0.0 Noviembre 2022
+# Descripción:
+#
+#   Este archivo define un procesador de datos que se encarga de transformar
+#   y formatear el contenido de un archivo CSV
+#-------------------------------------------------------------------------
 from src.extractors.txt_extractor import TXTExtractor
 from os.path import join
 import luigi, os, json
@@ -33,9 +45,8 @@ class TXTTransformer(luigi.Task):
                             "quantity": fields[3],
                             "price": fields[5],
                             "total": float(fields[3]) * float(fields[5]),
-
-                            # Por ejemplo "La posición 0 es invoice."
                             "invoice": fields[0],
+                            "invoiceDate": fields[4],  # Agregando el campo invoiceDate
                             "provider": fields[1],
                             "country": fields[7]
                         }
@@ -48,4 +59,3 @@ class TXTTransformer(luigi.Task):
         project_dir = os.path.dirname(os.path.abspath("loader.py")) # Agarra la ruta del proyecto ubicando "loader.py"
         result_dir = join(project_dir, "result")
         return luigi.LocalTarget(join(result_dir, "txt.json"))
-

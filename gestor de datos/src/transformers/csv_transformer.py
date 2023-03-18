@@ -1,4 +1,4 @@
-##!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #-------------------------------------------------------------------------
 # Archivo: csv_transformer.py
@@ -40,6 +40,7 @@ class CSVTransformer(luigi.Task):
                             "price": entry["rawprice"],
                             "total": float(entry["qty"]) * float(entry["rawprice"]),
                             "invoice": entry["inv"],
+                            "invoiceDate": entry["InvoiceDate"],
                             "provider": entry["provider"],
                             "country": entry["countryname"]
                         }
