@@ -35,7 +35,7 @@ Para ejecutar este componente es necesario contar con la ejecución de Dgraph, p
 docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
 
 
-
+<hr>
 El comando anterior instanciará los componentes Dgraph Zero (componente encargado de gestionar nodos Dgraph dentro de un cluster balanceando los datos almacenados en los nodos) y Dgraph Alpha (componente encargado de almacenar y gestionar los datos así como los indices y los predicados de consulta).
 Adicionalmente existe un componente que permite la interacción visual con Dgraph llamado Dgraph Ratel, para ello podemos utilizar el siguiente comando:
 
