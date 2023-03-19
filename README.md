@@ -59,3 +59,36 @@ docker build -t gestor-de-datos .
 Para ejecutar el componente y correr el proceso de extracción, transformación y carga de datos, utiliza el comando:
 
 docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
+
+
+
+<hr>
+<hr>
+## Uso de Anaconda Mini para gestor
+<hr>
+#Creación de env
+
+conda create --name gdd -y 
+
+#Activar env
+conda activate gdd
+
+#Base de datos en segundo plano 
+docker run -it -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
+docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
+
+#Correr
+python loader.py 
+
+## Uso de Anaconda Mini para Cliente
+<hr>
+#Creación de env
+
+conda create --name cliente -y 
+
+#Activar env
+conda activate cliente
+
+#Correr
+python main.py 
+
