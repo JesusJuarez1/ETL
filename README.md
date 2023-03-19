@@ -1,4 +1,5 @@
 
+
 Gestor de datos
 Componente responsable de ejecutar el proceso de extracción, transformación y carga de datos
 
@@ -55,45 +56,61 @@ docker build -t gestor-de-datos .
 <hr>
 
 
-#### Ejecución
+### Ejecución
+
 Para ejecutar el componente y correr el proceso de extracción, transformación y carga de datos, utiliza el comando:
 
-docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
+<b>docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos</b>
+
+
+<hr>
+<hr>
+<hr>
+
+
+# Uso de Anaconda mini como Entorno
+
+### Creación de env
+
+
+<b>conda create --name gdd -y </b>
+<hr>
+
+### Activar env
+
+<b>conda activate gdd</b>
+<hr>
 
 
 
-<hr>
-<hr>
-#### Uso de Anaconda Mini para gestor
-<hr>
-#### Creación de env
-<hr>
-conda create --name gdd -y 
-<hr>
-#### Activar env
-<hr>
-conda activate gdd
-<hr>
-#### Base de datos en segundo plano 
-<hr>
+### Base de datos en segundo plano 
+<b>
 docker run -it -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
 docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
-<hr>
+</b>
+
+
 #### Correr
+
+<b>python loader.py </b>
+
+
+
 <hr>
-python loader.py 
+
+## Uso de Anaconda Mini para Cliente
 <hr>
-#### Uso de Anaconda Mini para Cliente
+
+#### Creación de env
+
+<b>conda create --name cliente -y </b>
+
 <hr>
-#Creación de env
+### Activar env
+
+<b>conda activate cliente</b>
+
 <hr>
-conda create --name cliente -y 
-<hr>
-#Activar env
-<hr>
-conda activate cliente
-<hr>
-#Correr
-<hr>
-python main.py 
-<hr>
+### Correr
+
+<b> python main.py </b> 
