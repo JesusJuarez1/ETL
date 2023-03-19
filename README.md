@@ -1,5 +1,4 @@
 
-
 Gestor de datos
 Componente responsable de ejecutar el proceso de extracción, transformación y carga de datos
 
@@ -89,8 +88,15 @@ docker run -it -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgr
 docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
 </b>
 
+<hr>
 
-#### Correr
+### Correr
+
+Se debe cambiar el archivo de gestor *helpers/provider* y modificar la linea de host dejarla como 
+
+host = "http://localhost"
+
+Después ejecutar:
 
 <b>python loader.py </b>
 
@@ -106,11 +112,20 @@ docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
 <b>conda create --name cliente -y </b>
 
 <hr>
+
 ### Activar env
 
 <b>conda activate cliente</b>
 
 <hr>
+
 ### Correr
+
+Se debe cambiar la linea del archivo de cliente *data/provider*
+dejarla como 
+
+host = "http://localhost"
+
+y ejecutar:
 
 <b> python main.py </b> 
