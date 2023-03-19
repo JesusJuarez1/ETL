@@ -64,31 +64,36 @@ docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
 
 <hr>
 <hr>
-## Uso de Anaconda Mini para gestor
+#### Uso de Anaconda Mini para gestor
 <hr>
-#Creación de env
-
+#### Creación de env
+<hr>
 conda create --name gdd -y 
-
-#Activar env
+<hr>
+#### Activar env
+<hr>
 conda activate gdd
-
-#Base de datos en segundo plano 
+<hr>
+#### Base de datos en segundo plano 
+<hr>
 docker run -it -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
 docker run --name ratel  -d -p "8000:8000" dgraph/ratel:latest
-
-#Correr
+<hr>
+#### Correr
+<hr>
 python loader.py 
-
-## Uso de Anaconda Mini para Cliente
+<hr>
+#### Uso de Anaconda Mini para Cliente
 <hr>
 #Creación de env
-
+<hr>
 conda create --name cliente -y 
-
+<hr>
 #Activar env
+<hr>
 conda activate cliente
-
+<hr>
 #Correr
+<hr>
 python main.py 
-
+<hr>
