@@ -10,6 +10,7 @@
 #   Este archivo define un procesador de datos que se encarga de transformar
 #   y formatear el contenido de un archivo XML
 #-------------------------------------------------------------------------
+from datetime import datetime
 from src.extractors.xml_extractor import XMLExtractor
 import xml.etree.ElementTree as ET
 from os.path import join
@@ -32,9 +33,11 @@ class XMLTransformer(luigi.Task):
                             "description": row.find('desc').text,
                             "quantity": row.find('product_qty').text,
                             "price": row.find('current_price').text,
-                            "total": float(row.find('product_qty').text) * float(row.find('current_price').text),
-                            "date_inv": row.find('date_inv').text,  
+                            "total": float(row.find('product_qty').text) * float(row.find('current_price').text),  
                             "invoice": row.find('order_inv').text,
+                            #"date": row.find('date_inv').text,
+                            
+                            "date": datetime.strptime(row.find('date_inv').text, "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                             "provider": row.find('provider_identifier').text,
                             "country": row.find('country_loc').text
                         }

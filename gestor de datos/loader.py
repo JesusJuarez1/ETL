@@ -66,8 +66,7 @@ class Loader(luigi.Task):
                     ord_query_res = Provider.perform_query(Queries.query_invoice(p["invoice"]))
                     order = Processor.extract_query_uid(ord_query_res)
                     if not order:
-                        date = Processor.compute_random_date()
-                        mutation_res = Provider.perform_mutate(Queries.create_order(p["invoice"], p["quantity"], p["total"], date))
+                        mutation_res = Provider.perform_mutate(Queries.create_order(p["invoice"], p["quantity"], p["total"], p["date"]))
                         order = Processor.extract_created_uid(mutation_res, "order")
                     
                     # product

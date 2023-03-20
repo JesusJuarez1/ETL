@@ -15,44 +15,143 @@ class Queries:
 
     @staticmethod
     def get_total_products():
-        return "SELECT COUNT(description) FROM Product"
+        return """
+            {
+                response(func: has(description)) {
+                    count(uid)
+                }
+            }
+        """
 
     @staticmethod
     def get_total_providers():
-        return "SELECT SUM(pid) FROM (SELECT COUNT(pid) as pid FROM Provider GROUP BY pid)"
+        return """
+            {
+                response(func: has(pid)) {
+                    count(uid)
+                }
+            }
+        """
 
     @staticmethod
     def get_total_locations():
-        return "SELECT SUM(name) FROM (SELECT COUNT(name) as name FROM Location GROUP BY name)"
+        return """
+            {
+                response(func: has(name)) {
+                    count(uid)
+                }
+            }
+        """
 
     @staticmethod
     def get_total_orders():
-        return "SELECT COUNT(invoice) FROM Order"
+        return """
+            {
+                response(func: has(invoice)) {
+                    count(uid)
+                }
+            }
+        """
 
     @staticmethod
     def get_total_sales():
-        return "SELECT SUM(total.asFloat()) FROM Order"
+        return """
+            {
+                var(func: has(invoice)) {
+                    t as total
+                }
+
+                response() {
+                    total: sum(val(t))
+                }
+            }
+        """
 
     @staticmethod
     def get_providers_per_location():
-        return "SELECT COUNT(name), name FROM (SELECT expand(out('belongs').include('@rid', 'name')) as name from Provider) WHERE name <> 'United Kingdom' GROUP BY name"
+        return """
+            {
+                response(func: has(name)) {
+                    name
+                    providers: ~belongs {
+                        count(uid)
+                    }
+                }
+            }
+        """
 
     @staticmethod
     def get_sales_per_location():
-        return "SELECT SUM(total.asFloat()), country FROM Order WHERE country <> 'United Kingdom' GROUP BY country"
+        return """
+            {
+                response(func: has(name)){
+                    name
+                    providers: ~belongs {
+                        sold: ~sold {
+                            price
+                            quantity: count(bought)
+                        }
+                    }
+                }
+            }
+        """
 
     @staticmethod
     def get_orders_per_location():
-        return "SELECT COUNT(invoice), country FROM Order WHERE country <> 'United Kingdom' GROUP BY country"
+        return """
+            {
+                response(func: has(name)){
+                    name
+                    providers: ~belongs {
+                        sold: count(~sold)
+                    }
+                }
+            }
+        """
 
     @staticmethod
     def get_best_sellers():
-        return "SELECT invoice, SUM(total.asFloat()) as total FROM Order GROUP BY invoice ORDER BY total DESC LIMIT 5"
+        return """
+            {
+                var(func: has(description)) {
+                    c as count(bought) 
+                }
+                    
+                response(func: has(description), orderdesc: val(c)){
+                    description
+                    times: val(c)
+                    price
+                }
+            }
+        """
 
     @staticmethod
     def get_worst_sales():
-        return "SELECT invoice, SUM(total.asFloat()) as total FROM Order GROUP BY invoice ORDER BY total LIMIT 5"
+        return """
+            {
+                var(func: has(description)) {
+                    c as count(bought) 
+                }
+                    
+                response(func: has(description), orderasc: val(c)){
+                    description
+                    times: val(c)
+                    price
+                }
+            }
+        """
 
     @staticmethod
     def get_most_selled_products():
-        return "SELECT product, COUNT(product) FROM (SELECT first(in('bought').description) as product FROM Order) GROUP BY product ORDER BY COUNT DESC"
+        return """
+            {
+                var(func: has(description)) {
+                    c as count(bought) 
+                }
+                    
+                response(func: has(description), orderdesc: val(c)){
+                    description
+                    times: val(c)
+                }
+            }
+        """

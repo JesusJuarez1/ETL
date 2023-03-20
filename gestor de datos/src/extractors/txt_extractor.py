@@ -27,5 +27,5 @@ class TXTExtractor(luigi.Task):
         targets = []
         for file in txt_files:
             targets.append(luigi.LocalTarget(join(assets_dir, file)))
-        
+        return targets
         

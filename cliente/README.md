@@ -29,16 +29,16 @@ Este repositorio contiene los siguientes directorios y archivos
 
 Descarga el código del repositorio utilizando el siguiente comando:
 
-`git clone https://gitlab.com/ptn-arq-de-sw/data-flow/dashboard.git`
+`git clone https://gitlab.com/tareas-arquitectura-de-software-curso/flujo-de-datos/cliente`
 
 accede a la carpeta del componente
 
-`cd dashboard`
+`cd cliente`
 
 construye la imagen de Docker
 
 ```shell
-docker build -t dashboard .
+docker build -t cliente .
 ```
 
 ## Ejecución
@@ -46,10 +46,10 @@ docker build -t dashboard .
 Para ejecutar el sistema utiliza el siguiente comando:
 
 ```shell
-docker run --name dashboard -p 0.0.0.0:8000:8050 --link orientdb:orientdb dashboard
+docker run --name cliente -p 0.0.0.0:5000:5000 --link dgraph:dgraph cliente
 ```
 
-desde un navegador, accede a la url `http://localhost:8000` para visualizar el reporte del sistema
+desde un navegador, accede a la url `http://localhost:5000` para visualizar el reporte del sistema
 
 ## Versión
 

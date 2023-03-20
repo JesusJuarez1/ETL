@@ -19,11 +19,15 @@ class DashboardController:
     def load_products():
         response = Repository.get_products()
         if response.status_code != 200:
-            return {"products": 0}
+            return {"products": 0} 
         
         json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
         return {
-            "products": json_response["result"][0]["COUNT"]
+            "products": json_response["data"]["response"][0]["count"]
         }
 
     @staticmethod
@@ -33,8 +37,12 @@ class DashboardController:
             return {"providers": 0}
         
         json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
         return {
-            "providers": json_response["result"][0]["SUM"]
+            "providers": json_response["data"]["response"][0]["count"]
         }
 
     @staticmethod
@@ -44,8 +52,12 @@ class DashboardController:
             return {"locations": 0}
         
         json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
         return {
-            "locations": json_response["result"][0]["SUM"]
+            "locations": json_response["data"]["response"][0]["count"]
         }
 
     @staticmethod
@@ -55,8 +67,12 @@ class DashboardController:
             return {"orders": 0}
         
         json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
         return {
-            "orders": json_response["result"][0]["COUNT"]
+            "orders": json_response["data"]["response"][0]["count"]
         }
 
     @staticmethod
@@ -66,8 +82,12 @@ class DashboardController:
             return {"sales": 0}
         
         json_response = json.loads(response.text)
+        
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
         return {
-            "sales": json_response["result"][0]["SUM"]
+            "sales": json_response["data"]["response"][0]["total"]
         }
 
     @staticmethod
@@ -82,9 +102,14 @@ class DashboardController:
             "providers": [],
             "location": []
         }
+
         json_response = json.loads(response.text)
-        for entry in json_response["result"]:
-            result["providers"].append(entry["COUNT"])
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for entry in json_response["data"]["response"]:
+            result["providers"].append(entry["providers"][0]["count"])
             result["location"].append(entry["name"])
         return result
 
@@ -101,9 +126,18 @@ class DashboardController:
             "location": []
         }
         json_response = json.loads(response.text)
-        for entry in json_response["result"]:
-            result["sales"].append(entry["SUM"])
-            result["location"].append(entry["country"])
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for entry in json_response["data"]["response"]:
+            result["location"].append(entry["name"])
+            total = 0
+            for sold in entry["providers"]:
+                for order in sold["sold"]:
+                    total += (int(order["quantity"]) * float(order["quantity"]))
+            result["sales"].append(total)
+            
         return result
 
     @staticmethod
@@ -119,9 +153,16 @@ class DashboardController:
             "location": []
         }
         json_response = json.loads(response.text)
-        for entry in json_response["result"]:
-            result["orders"].append(entry["COUNT"])
-            result["location"].append(entry["country"])
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for entry in json_response["data"]["response"]:
+            result["location"].append(entry["name"])
+            total = 0
+            for sold in entry["providers"]:
+                total += int(sold["sold"])
+            result["orders"].append(total)
         return result
 
     @staticmethod
@@ -131,10 +172,14 @@ class DashboardController:
             return []
         result = []
         json_response = json.loads(response.text)
-        for product in json_response["result"]:
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for product in json_response["data"]["response"][0:5]:
             result.append({
-                "invoice": product["invoice"],
-                "total": product["total"]
+                "invoice": product["times"],
+                "total": int(product["times"]) * float(product["price"])
             })
         return result
 
@@ -145,10 +190,14 @@ class DashboardController:
             return []
         result = []
         json_response = json.loads(response.text)
-        for product in json_response["result"]:
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for product in json_response["data"]["response"][0:5]:
             result.append({
-                "invoice": product["invoice"],
-                "total": product["total"]
+                "invoice": product["times"],
+                "total": int(product["times"]) * float(product["price"])
             })
         return result
 
@@ -159,9 +208,13 @@ class DashboardController:
             return []
         result = []
         json_response = json.loads(response.text)
-        for product in json_response["result"]:
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for product in json_response["data"]["response"][0:5]:
             result.append({
-                "product": product["product"],
-                "times": product["COUNT"]
+                "product": product["description"],
+                "times": product["times"]
             })
         return result

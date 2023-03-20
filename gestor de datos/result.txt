@@ -1,0 +1,4 @@
+...file E:\Usuarios\Victor\Repositorio ASDA_ETL\ETL\gestor de datos\result\csv.json processed
+...file E:\Usuarios\Victor\Repositorio ASDA_ETL\ETL\gestor de datos\result\xml.json processed
+...file E:\Usuarios\Victor\Repositorio ASDA_ETL\ETL\gestor de datos\result\htm.json processed
+...file E:\Usuarios\Victor\Repositorio ASDA_ETL\ETL\gestor de datos\result\txt.json processed

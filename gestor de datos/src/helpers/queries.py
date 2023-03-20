@@ -14,6 +14,7 @@ class Queries:
             type Order {
                 total
                 invoice
+                
             }
 
             type Provider {

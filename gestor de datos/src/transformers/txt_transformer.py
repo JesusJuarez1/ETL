@@ -10,6 +10,7 @@
 #   Este archivo define un procesador de datos que se encarga de transformar
 #   y formatear el contenido de un archivo CSV
 #-------------------------------------------------------------------------
+from datetime import datetime
 from src.extractors.txt_extractor import TXTExtractor
 from os.path import join
 import luigi, os, json
@@ -46,7 +47,9 @@ class TXTTransformer(luigi.Task):
                             "price": fields[5],
                             "total": float(fields[3]) * float(fields[5]),
                             "invoice": fields[0],
-                            "invoiceDate": fields[4],  # Agregando el campo invoiceDate
+                            #"date": fields[4],  # Agregando el campo invoiceDate
+                            "date": datetime.strptime(fields[4], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                            
                             "provider": fields[1],
                             "country": fields[7]
                         }

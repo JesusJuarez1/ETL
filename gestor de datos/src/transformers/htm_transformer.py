@@ -10,6 +10,7 @@
 #   Este archivo define un procesador de datos que se encarga de transformar
 #   y formatear el contenido de un archivo HTM
 #-------------------------------------------------------------------------
+from datetime import datetime
 from src.extractors.htm_extractor import HTMExtractor
 from bs4 import BeautifulSoup
 from os.path import join
@@ -33,10 +34,11 @@ class HTMTransformer(luigi.Task):
                         {
                             "description": entry["description_product"],
                             "quantity": entry["Qty"],
-                            "date": entry["date_invoice"],
                             "price": entry["product_price"],
                             "total": float(entry["Qty"]) * float(entry["product_price"]),
                             "invoice": entry["order_invoice"],
+                            # "date": entry["date_invoice"],
+                            "date": datetime.strptime(entry["date_invoice"], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S"),
                             "provider": entry["id_provider"],
                             "country": entry["country_location"]
                         }

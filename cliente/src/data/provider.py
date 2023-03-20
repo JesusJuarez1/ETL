@@ -13,15 +13,15 @@
 #-------------------------------------------------------------------------
 import requests
 
-host = "http://orientdb"
-port = "2480"
-username = "root"
-password = "N0gPa0hk2sbP"
-database = "etl"
+host = "http://localhost"
+port = "8080"
 
 class Provider:
 
     @staticmethod
     def execute(query):
-        response = requests.get(f"{host}:{port}/query/{database}/sql/{query}", auth=(username, password))
+        headers = {
+            "Content-Type": "application/dql"
+        }
+        response = requests.post(f"{host}:{port}/query", data=query, headers=headers)
         return response
