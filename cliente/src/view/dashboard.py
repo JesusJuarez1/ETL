@@ -11,6 +11,7 @@
 #   del tablero
 #
 #-------------------------------------------------------------------------
+from datetime import datetime
 from src.controller.dashboard_controller import DashboardController
 import dash_bootstrap_components as dbc
 import plotly.express as px
@@ -26,10 +27,26 @@ class Dashboard:
             fluid = True,
             children = [
                 html.Br(),
-                self._header_title("Sales Report"),
+                self._header_title("Sales Report tasdasdas"),
                 html.Div(html.Hr()),
                 self._header_subtitle("Sales summary financial report"),
                 html.Br(),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            dcc.DatePickerRange(
+                                id='date-picker-range',
+                                
+                                min_date_allowed=datetime(2010, 1, 1),
+                                max_date_allowed=datetime.now(),
+                            ),
+                            
+                            # Botón aquí
+
+                        ),
+                    ]
+                ),
+                html.Div(id='output-container-date-picker-range'),
                 self._highlights_cards(),
                 html.Br(),
                 html.Div(
