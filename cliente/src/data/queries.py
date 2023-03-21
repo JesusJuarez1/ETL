@@ -11,6 +11,8 @@
 #   y realizar el llenado de datos del tablero
 #
 #-------------------------------------------------------------------------
+from datetime import datetime
+
 class Queries:
 
     @staticmethod
@@ -52,6 +54,21 @@ class Queries:
                 }
             }
         """
+        
+    #---------------------------
+    @staticmethod
+    def get_total_orders_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                response(func: has(invoice)) @filter(
+                    ge(date, "{start_d}") AND 
+                    le(date, "{end_d}")
+                ) {{
+                    count(uid)
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
+    #---------------------------
 
     @staticmethod
     def get_total_sales():
@@ -155,3 +172,20 @@ class Queries:
                 }
             }
         """
+        
+        
+    @staticmethod
+    def get_sales_per_location_by_date(start_date: datetime, end_date: datetime):
+        return """
+            {
+                response(func: has(name)){
+                    name
+                    providers: ~belongs {
+                        sold: ~sold {
+                            price
+                            quantity: count(bought)
+                        }
+                    }
+                }
+            }
+        """#.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())

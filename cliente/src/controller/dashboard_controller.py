@@ -12,6 +12,7 @@
 #-------------------------------------------------------------------------
 from src.data.repository import Repository
 import json
+import datetime
 
 class DashboardController:
 
@@ -74,6 +75,23 @@ class DashboardController:
         return {
             "orders": json_response["data"]["response"][0]["count"]
         }
+    
+    #-----------------------------
+    @staticmethod
+    def load_orders_date(start_date: datetime, end_date: datetime):
+        response = Repository.get_orders_date(start_date=start_date, end_date=end_date)
+        if response.status_code != 200:
+            return {"orders": 0}
+        
+        json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        return {
+            "orders": json_response["data"]["response"][0]["count"]
+        }
+    #-----------------------------
 
     @staticmethod
     def load_sales():
@@ -217,4 +235,35 @@ class DashboardController:
                 "product": product["description"],
                 "times": product["times"]
             })
+        return result
+    
+    
+    
+    
+    @staticmethod
+    def load_sales_per_location_by_date(start_date: datetime, end_date: datetime):
+        response = Repository.get_sales_by_location_by_date(start_date, end_date)
+        if response.status_code != 200:
+            return {
+                "sales": [],
+                "location": []
+            }
+        result = {
+            "sales": [],
+            "location": []
+        }
+        json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for entry in json_response["data"]["response"]:
+            result["location"].append(entry["name"])
+            total = 0
+            
+            for sold in entry["providers"]:
+                for order in sold["sold"]:
+                    total += (int(order["quantity"]) * float(order["quantity"]))
+            result["sales"].append(total)
+            
         return result
