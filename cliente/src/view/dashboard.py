@@ -34,15 +34,15 @@ class Dashboard:
                 dbc.Row(
                     [
                         dbc.Col(
+                        [
                             dcc.DatePickerRange(
                                 id='date-picker-range',
-                                
                                 min_date_allowed=datetime(2010, 1, 1),
                                 max_date_allowed=datetime.now(),
                             ),
-                            
-                            # Botón aquí
-
+                            dbc.Button("Filter", id="filter-button", color="primary", className="mr-1"),
+                        ],
+                        width={"size": 7},
                         ),
                     ]
                 ),

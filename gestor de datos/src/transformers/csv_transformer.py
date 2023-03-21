@@ -43,7 +43,7 @@ class CSVTransformer(luigi.Task):
                             "invoice": entry["inv"],
                             
                             ##"date": entry["InvoiceDate"],
-                            "date": datetime.strptime(entry["InvoiceDate"], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S"),
+                            "date": datetime.strptime(entry["InvoiceDate"], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                             "provider": entry["provider"],
                             "country": entry["countryname"]
                         }

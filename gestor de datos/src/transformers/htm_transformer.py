@@ -38,7 +38,7 @@ class HTMTransformer(luigi.Task):
                             "total": float(entry["Qty"]) * float(entry["product_price"]),
                             "invoice": entry["order_invoice"],
                             # "date": entry["date_invoice"],
-                            "date": datetime.strptime(entry["date_invoice"], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S"),
+                            "date": datetime.strptime(entry["date_invoice"], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                             "provider": entry["id_provider"],
                             "country": entry["country_location"]
                         }
