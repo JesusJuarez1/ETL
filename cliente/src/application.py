@@ -31,18 +31,13 @@ dashboard = Dashboard()
 app.layout = dashboard.document(min_date_allowed=datetime(2010, 1, 1), max_date_allowed=datetime.now())
 
 @app.callback(
-    Output('output-container-date-picker-range', 'start_date', 'end_date')
-    Input('Update-button', 'n_clicks'),
-    State('date-picker-range', 'start_date'),
-    State('date-picker-range', 'end_date')
+    Output(component_id='output-container-date-picker-range', component_property='children'),
+    [Input(component_id='Update-button', component_property='n_clicks')],
+    [State(component_id='date-picker-range', component_property='start_date'),
+    State(component_id='date-picker-range', component_property='end_date')]
 )
-def update(n_clicks, start_date, end_date):
-    app = dash.Dash(
-        external_stylesheets=[dbc.themes.LUX],
-        meta_tags=[
-            {"name": "viewport", "content": "width=device-width, initial-scale=1"}
-        ],
-    )
-    app.title = "ETL"
-    dashboard = Dashboard()
-    app.layout = dashboard.document(min_date_allowed=datetime(2010, 1, 1), max_date_allowed=datetime.now())
+def update(n_clicks, start_date:datetime, end_date:datetime):
+    if start_date != None and end_date != None:
+        start_date = datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%S000Z')
+        end_date = datetime.strptime(end_date, '%Y-%m-%dT%H:%M:%S000Z')
+        return dashboard.document(min_date_allowed=start_date, max_date_allowed=end_date)

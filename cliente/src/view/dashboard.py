@@ -26,7 +26,7 @@ class Dashboard:
     def __init__(self):
         pass
     
-    def document(self, min_date_allowed, max_date_allowed):
+    def document(self, min_date_allowed:datetime, max_date_allowed:datetime):
         return dbc.Container(
             fluid = True,
             children = [
