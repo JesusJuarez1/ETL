@@ -45,6 +45,7 @@ class Queries:
             }
         """
 
+    ## ORDENES POR FECHA
     @staticmethod
     def get_total_orders(start_date: datetime, end_date: datetime):
         return '''
@@ -102,6 +103,7 @@ class Queries:
                 }
             }
         """
+        
 
     @staticmethod
     def get_orders_per_location():

@@ -16,6 +16,7 @@ import dash_bootstrap_components as dbc
 import dash
 from datetime import datetime
 from dash.dependencies import Input, Output, State
+from dash import html
 
 app = dash.Dash(
     external_stylesheets=[dbc.themes.LUX],
@@ -42,4 +43,20 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
         
-        return dashboard.document(start_date=start_date, end_date=end_date)
+        
+        updated_content = dashboard._highlights_cards(start_date=start_date, end_date=end_date)
+            # Aquí agregamos los demás componentes que queremos actualizar
+        
+        
+        
+        return (dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
+                dashboard._bar_chart_providers_by_location(),
+                dashboard._bar_chart_sales_per_location(),
+                dashboard._bar_chart_orders_per_location(),
+                dashboard._panel_best_sellers(),
+                dashboard._panel_worst_sales(),
+                dashboard._panel_most_selled_products(),
+                
+
+                )
+    

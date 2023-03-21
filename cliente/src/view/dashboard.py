@@ -26,6 +26,9 @@ class Dashboard:
     def __init__(self):
         pass
     
+    
+    
+    
     def document(self, start_date:datetime, end_date:datetime):
         return dbc.Container(
             fluid = True,
@@ -50,7 +53,7 @@ class Dashboard:
                         ),
                     ]
                 ),
-                html.Div(id='output-container-date-picker-range'),
+                html.Div(id='output-container-date-picker-range', children=html.Div(id='updated-content')),
                 self._highlights_cards(start_date=start_date, end_date=end_date),
                 
                 
