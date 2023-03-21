@@ -26,7 +26,7 @@ class Dashboard:
     def __init__(self):
         pass
     
-    def document(self, min_date_allowed:datetime, max_date_allowed:datetime):
+    def document(self, start_date:datetime, end_date:datetime):
         return dbc.Container(
             fluid = True,
             children = [
@@ -41,8 +41,8 @@ class Dashboard:
                         [
                             dcc.DatePickerRange(
                                 id='date-picker-range',
-                                min_date_allowed = min_date_allowed,
-                                max_date_allowed = max_date_allowed,
+                                min_date_allowed = datetime(2010, 1, 1),
+                                max_date_allowed = datetime.now(),
                             ),
                             dbc.Button("Update", id="Update-button", color="primary", className="mr-1", n_clicks=0),
                         ],
@@ -51,14 +51,10 @@ class Dashboard:
                     ]
                 ),
                 html.Div(id='output-container-date-picker-range'),
-                self._highlights_cards(),
-                dbc.Row(
-                    [
-                        dbc.Col(
-                            self.cards_2(start_date=min_date_allowed, end_date=max_date_allowed)
-                        ),
-                    ]
-                ),
+                self._highlights_cards(start_date=start_date, end_date=end_date),
+                
+                
+                
                 html.Br(),
                 html.Div(
                     [
@@ -134,7 +130,7 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._bar_chart_sales_per_location_by_date(min_date_allowed, max_date_allowed),
+                                    self._bar_chart_sales_per_location_by_date(start_date, end_date),
                                     width=12
                                 ),
                             ]
@@ -175,9 +171,9 @@ class Dashboard:
             ]
         )
 
-    def _highlights_cards(self):
+    def _highlights_cards(self, start_date:datetime, end_date:datetime):
         products = DashboardController.load_products()
-        orders = DashboardController.load_orders()
+        orders = DashboardController.load_orders(start_date=start_date, end_date=end_date)
         providers = DashboardController.load_providers()
         locations = DashboardController.load_locations()
         sales = DashboardController.load_sales()
@@ -205,10 +201,12 @@ class Dashboard:
                 ),
             ]
         )
-        
+    
+    """
     def cards_2(self, start_date:datetime, end_date:datetime):
         orders_date = DashboardController.load_orders_date(start_date=start_date, end_date=end_date)
         return self._card_value("Orders by date", orders_date["orders"])
+    """
 
     def _bar_chart_providers_by_location(self):
         data = DashboardController.load_providers_per_location()

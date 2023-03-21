@@ -46,18 +46,7 @@ class Queries:
         """
 
     @staticmethod
-    def get_total_orders():
-        return """
-            {
-                response(func: has(invoice)) {
-                    count(uid)
-                }
-            }
-        """
-        
-    #---------------------------
-    @staticmethod
-    def get_total_orders_date(start_date: datetime, end_date: datetime):
+    def get_total_orders(start_date: datetime, end_date: datetime):
         return '''
             {{
                 response(func: has(invoice)) @filter(
@@ -68,7 +57,8 @@ class Queries:
                 }}
             }}
         '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
-    #---------------------------
+        
+    
 
     @staticmethod
     def get_total_sales():

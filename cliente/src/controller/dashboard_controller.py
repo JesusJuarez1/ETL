@@ -62,8 +62,8 @@ class DashboardController:
         }
 
     @staticmethod
-    def load_orders():
-        response = Repository.get_orders()
+    def load_orders(start_date: datetime, end_date: datetime):
+        response = Repository.get_orders(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return {"orders": 0}
         
@@ -76,22 +76,7 @@ class DashboardController:
             "orders": json_response["data"]["response"][0]["count"]
         }
     
-    #-----------------------------
-    @staticmethod
-    def load_orders_date(start_date: datetime, end_date: datetime):
-        response = Repository.get_orders_date(start_date=start_date, end_date=end_date)
-        if response.status_code != 200:
-            return {"orders": 0}
-        
-        json_response = json.loads(response.text)
-
-        assert('data' in json_response.keys())
-        assert('response' in json_response['data'].keys())
-
-        return {
-            "orders": json_response["data"]["response"][0]["count"]
-        }
-    #-----------------------------
+    
 
     @staticmethod
     def load_sales():

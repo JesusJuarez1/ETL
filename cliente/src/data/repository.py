@@ -33,15 +33,17 @@ class Repository:
         return response
 
     @staticmethod
-    def get_orders():
-        response = Provider.execute(Queries.get_total_orders())
+    def get_orders(start_date: datetime, end_date: datetime):
+        response = Provider.execute(Queries.get_total_orders(start_date=start_date, end_date=end_date))
         return response
     
     #---------------------------
+    """
     @staticmethod
     def get_orders_date(start_date: datetime, end_date: datetime):
         response = Provider.execute(Queries.get_total_orders_date(start_date=start_date, end_date=end_date))
         return response
+    """
     #---------------------------
 
     @staticmethod
