@@ -55,8 +55,6 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
                 dashboard._bar_chart_orders_per_location(),
                 dashboard._panel_best_sellers(),
                 dashboard._panel_worst_sales(),
-                dashboard._panel_most_selled_products(),
-                
-
+                dashboard._panel_most_selled_products(start_date=start_date, end_date=end_date),
                 )
     
