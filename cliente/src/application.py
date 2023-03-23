@@ -42,7 +42,21 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
     if n_clicks > 0:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
-        app.title = start_date.isoformat()+" -> "+end_date.isoformat()
-        app.layout = dashboard.document(start_date=start_date, end_date=end_date)
-        return app.layout
+        
+        
+        updated_content = dashboard._highlights_cards(start_date=start_date, end_date=end_date)
+            # Aquí agregamos los demás componentes que queremos actualizar
+        
+        
+        
+        return (
+                dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
+                ##dashboard._bar_chart_providers_by_location(),
+                dashboard._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
+                ##dashboard._bar_chart_porders_by_location(),
+                dashboard._panel_best_sellers(start_date=start_date, end_date=end_date),
+
+                
+
+                )
     

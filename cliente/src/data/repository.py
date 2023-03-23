@@ -23,8 +23,8 @@ class Repository:
         return response
 
     @staticmethod
-    def get_providers():
-        response = Provider.execute(Queries.get_total_providers())
+    def get_providers(start_date: datetime, end_date: datetime):
+        response = Provider.execute(Queries.get_total_providers_by_date(start_date=start_date, end_date=end_date))
         return response
 
     @staticmethod

@@ -30,7 +30,7 @@ class Dashboard:
             fluid = True,
             children = [
                 html.Br(),
-                self._header_title("Sales Report tasdasdas"),
+                self._header_title("Sales Report"),
                 html.Div(html.Hr()),
                 self._header_subtitle("Sales summary financial report"),
                 html.Br(),
@@ -157,7 +157,7 @@ class Dashboard:
     def _highlights_cards(self, start_date:datetime, end_date:datetime):
         products = DashboardController.load_products()
         orders = DashboardController.load_orders(start_date=start_date, end_date=end_date)
-        providers = DashboardController.load_providers()
+        providers = DashboardController.load_providers(start_date=start_date, end_date=end_date)
         locations = DashboardController.load_locations()
         sales = DashboardController.load_sales(start_date=start_date, end_date=end_date)
        
@@ -178,6 +178,7 @@ class Dashboard:
                             self._card_value("Locations", locations["locations"])
                         ),
                         dbc.Col(
+                            
                             self._card_value("Sales", "$ {:,.2f}".format(float(sales['sales'])))
                         ),
                     ]
