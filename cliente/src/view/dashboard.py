@@ -21,13 +21,9 @@ from dash.dependencies import Input, Output, State
 import dash
 
 class Dashboard:
-    app = dash.Dash(__name__)
         
     def __init__(self):
         pass
-    
-    
-    
     
     def document(self, start_date:datetime, end_date:datetime):
         return dbc.Container(
@@ -55,9 +51,6 @@ class Dashboard:
                 ),
                 html.Div(id='output-container-date-picker-range', children=html.Div(id='updated-content')),
                 self._highlights_cards(start_date=start_date, end_date=end_date),
-                
-                
-                
                 html.Br(),
                 html.Div(
                     [
@@ -77,7 +70,7 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._bar_chart_sales_per_location(),
+                                    self._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
                                     width=12
                                 ),
                             ]
@@ -103,11 +96,11 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._panel_best_sellers(),
+                                    self._panel_best_sellers(start_date=start_date, end_date=end_date),
                                     width=6
                                 ),
                                 dbc.Col(
-                                    self._panel_worst_sales(),
+                                    self._panel_worst_sales(start_date=start_date, end_date=end_date),
                                     width=6
                                 ),
                             ]
@@ -120,27 +113,14 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._panel_most_selled_products(),
+                                    self._panel_most_selled_products(start_date=start_date, end_date=end_date),
                                     width=12
                                 ),
                             ]
                         )
                     ]
                 ),
-                html.Br(),
-                html.Div(
-                    [
-                        dbc.Row(
-                            [
-                                dbc.Col(
-                                    self._bar_chart_sales_per_location_by_date(start_date, end_date),
-                                    width=12
-                                ),
-                            ]
-                        )
-                    ]
-                ),
-                html.Br(),
+                html.Br()
             ]
         )
 
@@ -179,7 +159,7 @@ class Dashboard:
         orders = DashboardController.load_orders(start_date=start_date, end_date=end_date)
         providers = DashboardController.load_providers()
         locations = DashboardController.load_locations()
-        sales = DashboardController.load_sales()
+        sales = DashboardController.load_sales(start_date=start_date, end_date=end_date)
        
         return html.Div(
             [
@@ -228,8 +208,8 @@ class Dashboard:
             ]
         )
 
-    def _bar_chart_sales_per_location(self):
-        data = DashboardController.load_sales_per_location()
+    def _bar_chart_sales_per_location(self, start_date: datetime, end_date: datetime):
+        data = DashboardController.load_sales_per_location(start_date=start_date, end_date=end_date)
         bar_char_fig = px.bar(data, x="location", y="sales")
         return dbc.Card(
             [
@@ -262,8 +242,8 @@ class Dashboard:
             ]
         )
 
-    def _panel_best_sellers(self):
-        best_sellers = DashboardController.load_best_sellers()
+    def _panel_best_sellers(self, start_date:datetime, end_date:datetime):
+        best_sellers = DashboardController.load_best_sellers(start_date=start_date, end_date=end_date)
         return html.Div(
             [
                 dbc.Card(
@@ -294,8 +274,8 @@ class Dashboard:
             ]
         )
 
-    def _panel_worst_sales(self):
-        worst_sales = DashboardController.load_worst_sales()
+    def _panel_worst_sales(self, start_date:datetime, end_date:datetime):
+        worst_sales = DashboardController.load_worst_sales(start_date=start_date, end_date=end_date)
         return html.Div(
             [
                 dbc.Card(
@@ -326,8 +306,8 @@ class Dashboard:
             ]
         )
 
-    def _panel_most_selled_products(self):
-        most_selled = DashboardController.load_most_selled_products()
+    def _panel_most_selled_products(self, start_date: datetime, end_date: datetime):
+        most_selled = DashboardController.load_most_selled_products(start_date=start_date, end_date=end_date)
         return html.Div(
             [
                 dbc.Card(
@@ -356,26 +336,4 @@ class Dashboard:
                     ]
                 )
             ]
-        )
-        
-        
-        
-        
-    def _bar_chart_sales_per_location_by_date(self, min_date_allowed:datetime, max_date_allowed:datetime):
-        data = DashboardController.load_sales_per_location_by_date(min_date_allowed, max_date_allowed)
-        bar_char_fig = px.bar(data, x="location", y="sales")
-        return dbc.Card(
-            [
-                dbc.CardBody(
-                    [
-                        html.H3("Sales per location by date jeje", className="card-title"),
-                        dcc.Graph(
-                            id='sales-per-location-by-date',
-                            figure=bar_char_fig
-                        ),
-                    ]
-                ),
-            ]
-        )
-        
-    
+        )    

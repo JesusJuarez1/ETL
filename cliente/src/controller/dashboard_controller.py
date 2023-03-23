@@ -79,8 +79,8 @@ class DashboardController:
     
 
     @staticmethod
-    def load_sales():
-        response = Repository.get_sales()
+    def load_sales(start_date:datetime, end_date:datetime):
+        response = Repository.get_sales(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return {"sales": 0}
         
@@ -117,8 +117,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_sales_per_location():
-        response = Repository.get_sales_by_location()
+    def load_sales_per_location(start_date: datetime, end_date: datetime):
+        response = Repository.get_sales_by_location(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return {
                 "sales": [],
@@ -169,8 +169,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_best_sellers():
-        response = Repository.get_best_sellers()
+    def load_best_sellers(start_date: datetime, end_date: datetime):
+        response = Repository.get_best_sellers(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return []
         result = []
@@ -187,8 +187,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_worst_sales():
-        response = Repository.get_worst_sales()
+    def load_worst_sales(start_date: datetime, end_date: datetime):
+        response = Repository.get_worst_sales(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return []
         result = []
@@ -205,8 +205,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_most_selled_products():
-        response = Repository.get_most_selled_products()
+    def load_most_selled_products(start_date: datetime, end_date: datetime):
+        response = Repository.get_most_selled_products(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return []
         result = []
@@ -220,35 +220,4 @@ class DashboardController:
                 "product": product["description"],
                 "times": product["times"]
             })
-        return result
-    
-    
-    
-    
-    @staticmethod
-    def load_sales_per_location_by_date(start_date: datetime, end_date: datetime):
-        response = Repository.get_sales_by_location_by_date(start_date, end_date)
-        if response.status_code != 200:
-            return {
-                "sales": [],
-                "location": []
-            }
-        result = {
-            "sales": [],
-            "location": []
-        }
-        json_response = json.loads(response.text)
-
-        assert('data' in json_response.keys())
-        assert('response' in json_response['data'].keys())
-
-        for entry in json_response["data"]["response"]:
-            result["location"].append(entry["name"])
-            total = 0
-            
-            for sold in entry["providers"]:
-                for order in sold["sold"]:
-                    total += (int(order["quantity"]) * float(order["quantity"]))
-            result["sales"].append(total)
-            
         return result
