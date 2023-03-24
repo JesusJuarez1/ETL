@@ -114,13 +114,18 @@ class Dashboard:
                             [
                                 dbc.Col(
                                     self._panel_most_selled_products(start_date=start_date, end_date=end_date),
-                                    width=12
+                                    width=12,
+                                    
                                 ),
+                                
+                
                             ]
                         )
                     ]
+                    
                 ),
-                html.Br()
+                
+                
             ]
         )
 
@@ -157,7 +162,7 @@ class Dashboard:
     def _highlights_cards(self, start_date:datetime, end_date:datetime):
         products = DashboardController.load_products()
         orders = DashboardController.load_orders(start_date=start_date, end_date=end_date)
-        providers = DashboardController.load_providers(start_date=start_date, end_date=end_date)
+        providers = DashboardController.load_providers()
         locations = DashboardController.load_locations()
         sales = DashboardController.load_sales(start_date=start_date, end_date=end_date)
        

@@ -35,19 +35,9 @@ class Queries:
             }
         """
     
-    @staticmethod
-    def get_total_providers_by_date(start_date: datetime, end_date: datetime):
-        return '''
-            {{
-                response(func: has(pid)) @filter(
-                    ge(date, "{start_d}") AND 
-                    le(date, "{end_d}")
-                ) {{
-                    count(uid)
-                }}
-            }}
-        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
     
+    
+            
 
     
 
@@ -109,17 +99,7 @@ class Queries:
             }
         """
     
-    def get_providers_per_location_by_date():
-        return """
-            {
-                response(func: has(name)) {
-                    name
-                    providers: ~belongs {
-                        count(uid)
-                    }
-                }
-            }
-        """
+    
 
     @staticmethod
     def get_sales_per_location():
@@ -140,7 +120,7 @@ class Queries:
     @staticmethod
     def get_sales_per_location_by_date(start_date: datetime, end_date: datetime):
         return '''
-                {{
+            {{
                     response(func: has(name)){{
                     name
                     providers: ~belongs {{
@@ -168,6 +148,11 @@ class Queries:
                 }
             }
         """
+    
+   
+    
+
+    
 
     @staticmethod
     def get_best_sellers():

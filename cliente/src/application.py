@@ -50,11 +50,23 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
         
         
         return (
+                html.Br(),
+                html.H1("Reportes por fecha"),
+                html.Br(),
                 dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
-                ##dashboard._bar_chart_providers_by_location(),
+                ## dashboard._bar_chart_providers_by_location(),
                 dashboard._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
-                ##dashboard._bar_chart_porders_by_location(),
+                ## dashboard._bar_chart_orders_per_location(),
                 dashboard._panel_best_sellers(start_date=start_date, end_date=end_date),
+                dashboard._panel_worst_sales(start_date=start_date, end_date=end_date),
+                dashboard._panel_most_selled_products(start_date=start_date, end_date=end_date),
+                html.Br(),
+                html.Br(),
+                html.H1("Reporte General"),
+                html.Br(),
+                html.Br(),
+                
+                
 
                 
 

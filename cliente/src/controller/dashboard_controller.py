@@ -32,8 +32,8 @@ class DashboardController:
         }
 
     @staticmethod
-    def load_providers(start_date:datetime, end_date:datetime):
-        response = Repository.get_providers(start_date=start_date, end_date=end_date)
+    def load_providers():
+        response = Repository.get_providers()
         if response.status_code != 200:
             return {"providers": 0}
         
